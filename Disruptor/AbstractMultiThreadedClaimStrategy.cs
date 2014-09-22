@@ -2,13 +2,22 @@ using System.Threading;
 
 namespace Disruptor
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class AbstractMultiThreadedClaimStrategy : IClaimStrategy
     {
-        protected int _bufferSize;
+        private int _bufferSize;
+        
         private Sequence _claimSequence = new Sequence();
+
         private readonly ThreadLocal<MutableLong> _minGatingSequenceThreadLocal = new ThreadLocal<MutableLong>(() => new MutableLong(Sequencer.InitialCursorValue));
 
-        public AbstractMultiThreadedClaimStrategy(int bufferSize)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bufferSize"></param>
+        protected AbstractMultiThreadedClaimStrategy(int bufferSize)
         {
             _bufferSize = bufferSize;
         }
@@ -57,6 +66,14 @@ namespace Disruptor
             return nextSequence;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="availableCapacity"></param>
+        /// <param name="delta"></param>
+        /// <param name="dependentSequences"></param>
+        /// <returns></returns>
+        /// <exception cref="InsufficientCapacityException"></exception>
         public long CheckAndIncrement(int availableCapacity, int delta, Sequence[] dependentSequences)
         {
             for (;;)
@@ -105,6 +122,12 @@ namespace Disruptor
             WaitForFreeSlotAt(sequence, dependentSequences, _minGatingSequenceThreadLocal.Value);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sequence"></param>
+        /// <param name="cursor"></param>
+        /// <param name="batchSize"></param>
         public abstract void SerialisePublishing(long sequence, Sequence cursor, long batchSize);
 
         private void WaitForCapacity(Sequence[] dependentSequences, MutableLong minGatingSequence)
