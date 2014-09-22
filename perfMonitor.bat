@@ -1,3 +1,4 @@
-cd C:\Users\Olivier\Desktop\Disruptor\Source
-PerfMonitor\perfMonitor runAnalyze C:\Users\Olivier\Desktop\Disruptor\Source\Target\Bin\Disruptor.PerfTestRunner.exe
+cd .\Target\Report\Perf\
+..\..\..\Tools\PerfMonitor\PerfMonitor.exe runAnalyze ..\..\Bin\Disruptor.PerfTests.exe 0 0 3
+
 pause
