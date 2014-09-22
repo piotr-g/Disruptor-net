@@ -108,7 +108,7 @@ namespace Disruptor
        
         /// <summary>
         /// Attempt to claim the next event in sequence for publishing.  Will return the
-        /// number of the slot if there is at least availableCapacity slots
+        /// number of the slot if there is at least <paramref name="availableCapacity"/> slots
         /// available. 
         /// </summary>
         /// <param name="availableCapacity"></param>
